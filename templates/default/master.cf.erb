@@ -43,6 +43,23 @@ virtual   unix  -       n       n       -       -       virtual
 lmtp      unix  -       -       n       -       -       lmtp
 anvil     unix  -       -       n       -       1       anvil
 scache	  unix	-	-	n	-	1	scache
+
+
+<% if @settings['custom'] %>
+  <% defaults = {
+    "type" => "unix",
+    "private" => "-",
+    "unpriv" => "n",
+    "chroot" => "n",
+    "wakeup" => "-",
+    "maxproc" => "-"
+  } %>
+  <% @settings['custom'].each do |m| %>
+    <% m = defaults.merge(m) %>
+<%= [ m['service'], m['type'], m['private'], m['unpriv'], m['chroot'], m['wakeup'], m['maxproc'], m['command'] ].join("    ") %>
+    <% end %>
+<% end %>
+
 #
 # ====================================================================
 # Interfaces to non-Postfix software. Be sure to examine the manual
